@@ -1,0 +1,25 @@
+{
+  "tasks": [
+    {
+      "title": "Zadanie1",
+      "time": 90,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 1
+    },
+    {
+      "title": "Zadanie2",
+      "time": 360,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": true,
+      "id": 2
+    },
+    {
+      "title": "kurczych",
+      "time": "",
+      "id": 3
+    }
+  ]
+}
