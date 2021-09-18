@@ -8,10 +8,11 @@ class TasksManager extends React.Component {
     }
     
     render() {
+        console.log('render')
         return (
             <>
                 <h1>TasksManager</h1>
-                <section onSubmit = {this.addTask}>
+                <section onSubmit = {this.addTaskToDB}>
                 <form>
                     <input name ="title" onChange={this.changeInput}/>
                     <input name="time" onChange={this.changeInput}></input>
@@ -46,42 +47,40 @@ class TasksManager extends React.Component {
         }))
     }
 
-
-
     componentDidMount (){
         tasksDB.loadData()
-         .then(res => {
-            return res.map(item => { console.log(item)
-           this.setData(item)}
-                )
-         })
-         // .then(res => console.log(res))
+        .then(resp => { return resp.map(item => this.setState({tasks: [...this.state.tasks, item]}))
+            })
      }
-     setData = e => {
-         this.setState({tasks: data});
-     }
- 
- 
-     onClick = () => {
+
+    onClick = () => {
          const { tasks } = this.state;
          console.log( tasks)
      }
 
-    addTask = e => {
+    addTaskToDB = e => {
         e.preventDefault();
         const {title, time} = e.target.elements
-        const data = {
+        const task = {
             title: title.value,
             time: time.value,
         }
-        console.log(data, typeof data)
-        tasksDB.addData(data)
+        if (title.value.length>3 && time.value >0 ) {
+            tasksDB.addData(task)
+            .then(this.loadTasks())
+            .catch(err=>console.log(err))
+        } else (alert('Treść zadania nie może mieć mniej niż 3 znaki a czas nie moze byc mniejszy od 0'))
     }
 
     changeInput =e => {
         // console.log(e.target.value)
     }
 
+    loadTasks() {
+        this.setState({tasks:[]})
+        tasksDB.loadData()
+            .then(resp => { return resp.map(item => this.setState({tasks: [...this.state.tasks, item]}))})
+    }
 }
 
 export default TasksManager;
