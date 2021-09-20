@@ -1,7 +1,7 @@
 {
   "tasks": [
     {
-      "title": "Zakupy",
+      "title": "Zakupy1",
       "time": 90,
       "isRunning": false,
       "isDone": false,
@@ -9,50 +9,75 @@
       "id": 1
     },
     {
-      "title": "Zadanie 2",
-      "time": 360,
+      "title": "Zakupy2",
+      "time": 90,
       "isRunning": false,
-      "isDone": false,
+      "isDone": true,
       "isRemoved": false,
       "id": 2
     },
     {
-      "title": "Projekt",
-      "time": 3320,
+      "title": "Zakupy3",
+      "time": 90,
       "isRunning": false,
       "isDone": false,
-      "isRemoved": true,
+      "isRemoved": false,
       "id": 3
     },
     {
-      "title": "Umyć okna",
-      "time": "360",
-      "id": 4
+      "title": "Zadanie 4",
+      "time": 22,
+      "id": 4,
+      "isRunning": false,
+      "isDone": true,
+      "isRemoved": true
     },
     {
-      "title": "Umyć okna",
-      "time": "360",
-      "id": 5
+      "title": "Zadanie 5",
+      "time": 0,
+      "id": 5,
+      "isRunning": false,
+      "isDone": false
     },
     {
-      "title": "Zadanie 99",
-      "time": "4",
-      "id": 6
+      "title": "Zadanie 6",
+      "time": 4,
+      "id": 6,
+      "isDone": true
     },
     {
-      "title": "Zadanie 99",
-      "time": "4",
-      "id": 7
+      "title": "Zadanie 7",
+      "time": 33,
+      "id": 7,
+      "isRunning": true
     },
     {
-      "title": "Zadanie 996",
-      "time": "4",
-      "id": 8
+      "title": "Zadanie 8",
+      "time": -9,
+      "id": 8,
+      "isRunning": false,
+      "isDone": false
     },
     {
-      "title": "Zadanie 996",
-      "time": "6",
-      "id": 9
+      "title": "Zadanie 9",
+      "time": 0,
+      "id": 9,
+      "isRunning": true,
+      "isDone": false
+    },
+    {
+      "title": "Zadanie 11",
+      "time": 0,
+      "id": 10,
+      "isRunning": false,
+      "isDone": false
+    },
+    {
+      "title": "Projekt",
+      "time": "3600",
+      "id": 11,
+      "isRunning": false,
+      "isDone": true
     }
   ]
 }

@@ -5,6 +5,5 @@ body {
 
 .btn {
     font-family: 'Arial Narrow', Arial, sans-serif, sans-serif;
-    /* text-transform: uppercase; */
-
+    text-transform: uppercase;
 }

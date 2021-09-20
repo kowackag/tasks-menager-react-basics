@@ -20,7 +20,7 @@ class TasksManager extends React.Component {
                 </form>
                 </section>
                 <section>
-                    <h3>Zaplanowane Zadania:</h3>
+                    <h3>Zaplanowane zadania:</h3>
                     <ul>{this.renderTaskList()}</ul>
                 </section>
                 <section>
@@ -33,7 +33,7 @@ class TasksManager extends React.Component {
 
     renderTaskList() {
         return (this.state.tasks.map(item => {
-            const {title, time, id, isRemoved, isDone}= item;
+            const {title, time, id, isRemoved, isDone, isRunning} = item;
             if(!isRemoved && !isDone) {
                 return (
                     <li data-id={id}> 
@@ -42,7 +42,8 @@ class TasksManager extends React.Component {
                             <p> {this.displayTime(time)}</p>
                         </header>
                         <footer>
-                            <button className ="btn" onClick ={this.runTask}>Start</button>
+                            {!isRunning ? <button className ="btn" onClick ={this.runTask}>start</button> : 
+                            <button className ="btn" onClick ={this.stopTask}>stop</button>}
                             <button className ="btn" onClick ={this.finishTask}>Zakończone</button>
                             <button className ="btn" onClick ={this.deleteTask}>Usuń</button>
                         </footer>
@@ -74,7 +75,7 @@ class TasksManager extends React.Component {
 
     componentDidMount (){
         this.loadTasks();   
-     }
+    }
 
     addTaskToDB = e => {
         e.preventDefault();
@@ -82,11 +83,15 @@ class TasksManager extends React.Component {
         const task = {
             title: title.value,
             time: time.value,
+            // isRunning: false, //chyba nie ma sensu dodawac tyh wartości
+            // isDone: false,
+            // isRemoved: false
         }
         if (title.value.length>3 && time.value >0 ) {
             tasksDB.addData(task)
-            .then(this.loadTasks())
-            .catch(err=>console.log(err))
+            tasksDB.loadData()
+                .then(this.loadTasks())
+                .catch(err=>console.log(err))
         } else (alert('Treść zadania nie może mieć mniej niż 3 znaki a czas nie moze byc mniejszy od 0'))
     }
 
@@ -98,21 +103,31 @@ class TasksManager extends React.Component {
 
     onClick = () => {
         const { tasks } = this.state;
-        console.log( tasks)
     }
 
     deleteTask = e => {
         e.preventDefault;
         const idTask = e.target.parentElement.parentElement.dataset.id;
         tasksDB.loadData()
-            .then(()=> this.updateTask(idTask, "isRemoved", true))
+            .then(res=> res.filter(item => item.id == idTask))
+            .then((item) => { 
+                if (item[0].isDone) {
+                    this.updateTask(idTask, "isRemoved", true)
+                } else { alert("Zadanie musi być zakończone by móc je usunąć")}
+            })
+            .catch(err=>console.log(err))
     }
 
     finishTask = e => {
         e.preventDefault;
         const idTask = e.target.parentElement.parentElement.dataset.id;
         tasksDB.loadData()
-            .then(()=> this.updateTask(idTask, "isDone", true))
+            .then(res=> res.filter(item => item.id == idTask))
+            .then((item) => {
+                if (item[0].isRunning) {alert("Zatrzymaj realizację zadania zanim je zakończysz")
+                } else {this.updateTask(idTask, "isDone", true)}
+            })
+            .catch(err=>console.log(err))
     }
 
     restoreTask = e => {
@@ -122,14 +137,56 @@ class TasksManager extends React.Component {
             .then(()=> this.updateTask(idTask, "isDone", false))
     }
 
+    runTask = e => {
+        e.preventDefault;
+        const idTask = e.target.parentElement.parentElement.dataset.id;
+        tasksDB.loadData()
+            .then(()=> this.updateTask(idTask, "isRunning", true))
+            .then(()=>this.runTimer(idTask))
+    }
+
+    stopTask = e => {
+        e.preventDefault;
+        const idTask = e.target.parentElement.parentElement.dataset.id;
+        tasksDB.loadData()
+            .then(res=> res.filter(item => item.id == idTask))
+            .then(()=> this.updateTask(idTask, "isRunning", false))
+    }
+
+    runTimer (id) {
+        tasksDB.loadData()
+        .then(res=> res.filter(item => item.id == id))
+        // .then(item => { 
+        //     let time = Number(item[0]["time"]);
+        //     // this.setState({time: time});
+        //     // setInterval(()=> {
+        //     //     time--;
+        //     //     this.setState({time:time})
+        //     //     console.log(time)
+        //     // },1000)
+        // })
+        .then(item => { 
+            let time = Number(item[0]["time"]);
+            const ind = setInterval(()=> {
+                this.updateTask(id,"time", time );
+                time--; 
+                if (time<0) {
+                    clearInterval(ind)
+                }
+            }, 1000)
+        })
+    }
+    // -----------------------------------------------------
+
     updateTask(id, prop, val) {
         tasksDB.loadData()
         .then(res=> res.filter(item => item.id == id))
         .then(item => {{
             item[0][prop] = val;
             tasksDB.updateData(id, item[0]);
-            }})
-        .then(()=>this.loadTasks())
+        }})
+        .catch(err=>console.log(err))
+        .finally(()=>this.loadTasks())
     }
 
     displayTime(time) {
