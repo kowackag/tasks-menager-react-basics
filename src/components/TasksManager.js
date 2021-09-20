@@ -8,14 +8,13 @@ class TasksManager extends React.Component {
     }
     
     render() {
-        console.log('render')
         return (
             <>
                 <h1>TasksManager</h1>
                 <section onSubmit = {this.addTaskToDB}>
                 <form>
                     <input name ="title" onChange={this.changeInput}/>
-                    <input name="time" onChange={this.changeInput}></input>
+                    <input name="time" type ="number" onChange={this.changeInput}></input>
                     <input type ="submit"/>
                 </form>
                 </section>
@@ -34,7 +33,7 @@ class TasksManager extends React.Component {
                     <li data-id={id}> 
                         <header>
                             <h2>{title}</h2>
-                            <p>Czas:{time}sekund</p>
+                            <p> {`${Math.floor(time/360)<10 ? '0'+ Math.floor(time/360) : Math.floor(time/360) }:${Math.floor(time/60)<10 ? '0' + Math.floor(time/60): Math.floor(time/60)}:${time%60<10 ? '0'+time%60:time%60}`}</p>
                         </header>
                         <footer>
                             <button onClick ={this.runTask}>start</button>
@@ -48,14 +47,10 @@ class TasksManager extends React.Component {
     }
 
     componentDidMount (){
-        tasksDB.loadData()
-        .then(resp => { return resp.map(item => this.setState({tasks: [...this.state.tasks, item]}))
-            })
-     }
-
-    onClick = () => {
-         const { tasks } = this.state;
-         console.log( tasks)
+        // tasksDB.loadData()
+        // .then(resp => { return resp.map(item => this.setState({tasks: [...this.state.tasks, item]}))
+        //     })
+        this.loadTasks();   
      }
 
     addTaskToDB = e => {
@@ -80,6 +75,11 @@ class TasksManager extends React.Component {
         this.setState({tasks:[]})
         tasksDB.loadData()
             .then(resp => { return resp.map(item => this.setState({tasks: [...this.state.tasks, item]}))})
+    }
+
+    onClick = () => {
+        const { tasks } = this.state;
+        console.log( tasks)
     }
 }
 
