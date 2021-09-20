@@ -38,7 +38,7 @@ class TasksManager extends React.Component {
                         <footer>
                             <button onClick ={this.runTask}>start</button>
                             <button>zakończone</button>
-                            <button>usuń</button>
+                            <button onClick ={this.deleteTask}>usuń</button>
                         </footer>
                     </li>
                 )
@@ -80,6 +80,18 @@ class TasksManager extends React.Component {
     onClick = () => {
         const { tasks } = this.state;
         console.log( tasks)
+    }
+
+    deleteTask = e => {
+        e.preventDefault;
+        const idTask = e.target.parentElement.parentElement.dataset.id;
+        tasksDB.loadData()
+            .then(res=> res.filter(item => item.id == idTask))
+            .then(item => {{
+                item[0].isRemoved = true;
+                tasksDB.updateData(idTask, item[0]);
+                }})
+            .finally (()=>this.loadTasks());
     }
 }
 

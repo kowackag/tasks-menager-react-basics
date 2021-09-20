@@ -1,7 +1,7 @@
 {
   "tasks": [
     {
-      "title": "Zadania react-components",
+      "title": "Zadanie1",
       "time": 90,
       "isRunning": false,
       "isDone": false,
@@ -9,32 +9,12 @@
       "id": 1
     },
     {
-      "title": "Zrobić pranie",
+      "title": "Zadanie2",
       "time": 360,
       "isRunning": false,
       "isDone": false,
-      "isRemoved": false,
+      "isRemoved": true,
       "id": 2
-    },
-    {
-      "title": "Project js",
-      "time": "22",
-      "id": 3
-    },
-    {
-      "title": "Zakupy",
-      "time": "555",
-      "id": 4
-    },
-    {
-      "title": "Zadanie 5",
-      "time": "55",
-      "id": 5
-    },
-    {
-      "title": "Moduł 11 zakończyć",
-      "time": "300",
-      "id": 6
     }
   ]
 }
