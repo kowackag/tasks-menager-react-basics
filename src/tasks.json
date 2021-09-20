@@ -5,38 +5,54 @@
       "time": 90,
       "isRunning": false,
       "isDone": false,
-      "isRemoved": true,
+      "isRemoved": false,
       "id": 1
     },
     {
-      "title": "Zadanie2",
+      "title": "Zadanie 2",
       "time": 360,
       "isRunning": false,
-      "isDone": true,
-      "isRemoved": true,
+      "isDone": false,
+      "isRemoved": false,
       "id": 2
     },
     {
       "title": "Projekt",
       "time": 3320,
       "isRunning": false,
-      "isDone": true,
+      "isDone": false,
       "isRemoved": true,
       "id": 3
     },
     {
-      "title": "Zadanie 888",
-      "time": "44",
-      "id": 4,
-      "isDone": true,
-      "isRemoved": true
+      "title": "Umyć okna",
+      "time": "360",
+      "id": 4
     },
     {
-      "title": "Wywiesić pranie",
-      "time": "8",
-      "id": 5,
-      "isDone": true,
-      "isRemoved": true
+      "title": "Umyć okna",
+      "time": "360",
+      "id": 5
+    },
+    {
+      "title": "Zadanie 99",
+      "time": "4",
+      "id": 6
+    },
+    {
+      "title": "Zadanie 99",
+      "time": "4",
+      "id": 7
+    },
+    {
+      "title": "Zadanie 996",
+      "time": "4",
+      "id": 8
+    },
+    {
+      "title": "Zadanie 996",
+      "time": "6",
+      "id": 9
     }
   ]
 }

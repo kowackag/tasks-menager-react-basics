@@ -63,7 +63,7 @@ class TasksManager extends React.Component {
                             <p> {this.displayTime(time)}</p>
                         </header>
                         <footer>
-                            <button className ="btn" onClick ={this.finishTask}>Przywróć</button>
+                            <button className ="btn" onClick ={this.restoreTask}>Przywróć</button>
                             <button className ="btn" onClick ={this.deleteTask}>Usuń</button>
                         </footer>
                     </li>
@@ -90,10 +90,6 @@ class TasksManager extends React.Component {
         } else (alert('Treść zadania nie może mieć mniej niż 3 znaki a czas nie moze byc mniejszy od 0'))
     }
 
-    changeInput =e => {
-        // console.log(e.target.value)
-    }
-
     loadTasks() {
         this.setState({tasks:[]})
         tasksDB.loadData()
@@ -109,24 +105,31 @@ class TasksManager extends React.Component {
         e.preventDefault;
         const idTask = e.target.parentElement.parentElement.dataset.id;
         tasksDB.loadData()
-            .then(res=> res.filter(item => item.id == idTask))
-            .then(item => {{
-                item[0].isRemoved = true;
-                tasksDB.updateData(idTask, item[0]);
-                }})
-            .finally (()=>this.loadTasks());
+            .then(()=> this.updateTask(idTask, "isRemoved", true))
     }
 
     finishTask = e => {
         e.preventDefault;
         const idTask = e.target.parentElement.parentElement.dataset.id;
         tasksDB.loadData()
-            .then(res=> res.filter(item => item.id == idTask))
-            .then(item => {{
-                item[0].isDone = true;
-                tasksDB.updateData(idTask, item[0]);
-                }})
-            .finally (()=>this.loadTasks());
+            .then(()=> this.updateTask(idTask, "isDone", true))
+    }
+
+    restoreTask = e => {
+        e.preventDefault;
+        const idTask = e.target.parentElement.parentElement.dataset.id;
+        tasksDB.loadData()
+            .then(()=> this.updateTask(idTask, "isDone", false))
+    }
+
+    updateTask(id, prop, val) {
+        tasksDB.loadData()
+        .then(res=> res.filter(item => item.id == id))
+        .then(item => {{
+            item[0][prop] = val;
+            tasksDB.updateData(id, item[0]);
+            }})
+        .then(()=>this.loadTasks())
     }
 
     displayTime(time) {
