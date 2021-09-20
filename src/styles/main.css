@@ -1,3 +1,10 @@
 body {
     background-color: #dcdcdc;
+    font-family: 'Arial Narrow', Arial, sans-serif, sans-serif;
+}
+
+.btn {
+    font-family: 'Arial Narrow', Arial, sans-serif, sans-serif;
+    /* text-transform: uppercase; */
+
 }

@@ -1,7 +1,7 @@
 {
   "tasks": [
     {
-      "title": "Zadanie1",
+      "title": "Zakupy",
       "time": 90,
       "isRunning": false,
       "isDone": false,
@@ -12,7 +12,7 @@
       "title": "Zadanie2",
       "time": 360,
       "isRunning": false,
-      "isDone": false,
+      "isDone": true,
       "isRemoved": true,
       "id": 2
     },
@@ -20,9 +20,23 @@
       "title": "Projekt",
       "time": 3320,
       "isRunning": false,
-      "isDone": false,
-      "isRemoved": false,
+      "isDone": true,
+      "isRemoved": true,
       "id": 3
+    },
+    {
+      "title": "Zadanie 888",
+      "time": "44",
+      "id": 4,
+      "isDone": true,
+      "isRemoved": true
+    },
+    {
+      "title": "Wywiesić pranie",
+      "time": "8",
+      "id": 5,
+      "isDone": true,
+      "isRemoved": true
     }
   ]
 }
