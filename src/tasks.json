@@ -5,7 +5,7 @@
       "time": 90,
       "isRunning": false,
       "isDone": false,
-      "isRemoved": false,
+      "isRemoved": true,
       "id": 1
     },
     {
@@ -15,6 +15,14 @@
       "isDone": false,
       "isRemoved": true,
       "id": 2
+    },
+    {
+      "title": "Projekt",
+      "time": 3320,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 3
     }
   ]
 }

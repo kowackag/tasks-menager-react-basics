@@ -33,7 +33,7 @@ class TasksManager extends React.Component {
                     <li data-id={id}> 
                         <header>
                             <h2>{title}</h2>
-                            <p> {`${Math.floor(time/360)<10 ? '0'+ Math.floor(time/360) : Math.floor(time/360) }:${Math.floor(time/60)<10 ? '0' + Math.floor(time/60): Math.floor(time/60)}:${time%60<10 ? '0'+time%60:time%60}`}</p>
+                            <p> {`${Math.floor(time/3600)<10 ? '0'+ Math.floor(time/3600) : Math.floor(time/3600) }:${Math.floor(time/60)%60<10 ? '0' + Math.floor(time/60)%60: Math.floor(time/60)%60}:${time%60<10 ? '0'+time%60:time%60}`}</p>
                         </header>
                         <footer>
                             <button onClick ={this.runTask}>start</button>
