@@ -159,6 +159,7 @@ class TasksManager extends React.Component {
     }
 
     // -----------------------------------------------------
+    
     updateTask(id, prop, val) {
         tasksDB.loadDataAPI()
             .then(res => res.filter(item => item.id === Number(id)))
