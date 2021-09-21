@@ -1,31 +1,31 @@
 {
   "tasks": [
     {
-      "title": "Zakupy1",
-      "time": 0,
+      "title": "Zadanie 1 - JS basis",
+      "time": 1100,
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
       "id": 1
     },
     {
-      "title": "Zakupy2",
-      "time": 90,
+      "title": "Zadanie tablice",
+      "time": 190,
       "isRunning": false,
       "isDone": true,
-      "isRemoved": true,
+      "isRemoved": false,
       "id": 2
     },
     {
-      "title": "Zakupy3",
+      "title": "Zadanie 3",
       "time": 90,
       "isRunning": false,
       "isDone": true,
-      "isRemoved": true,
+      "isRemoved": false,
       "id": 3
     },
     {
-      "title": "Zadanie 4",
+      "title": "Zadanie react",
       "time": 22,
       "id": 4,
       "isRunning": false,
@@ -33,52 +33,41 @@
       "isRemoved": true
     },
     {
-      "title": "Zadanie 5",
-      "time": 0,
-      "id": 5,
+      "title": "Zadanie 9",
+      "time": 120,
+      "id": 9,
       "isRunning": false,
-      "isDone": false
-    },
-    {
-      "title": "Zadanie 6",
-      "time": 4,
-      "id": 6,
       "isDone": true
     },
     {
-      "title": "Zadanie 7",
-      "time": 6,
-      "id": 7,
-      "isRunning": false,
-      "isDone": false
-    },
-    {
-      "title": "Zadanie 8",
-      "time": -9,
-      "id": 8,
-      "isRunning": false,
-      "isDone": false
-    },
-    {
-      "title": "Zadanie 9",
-      "time": 0,
-      "id": 9,
-      "isRunning": false,
-      "isDone": false
-    },
-    {
       "title": "Zadanie 11",
-      "time": 0,
+      "time": 100,
       "id": 10,
       "isRunning": false,
       "isDone": false
     },
     {
       "title": "Projekt",
-      "time": "3600",
+      "time": 2163,
       "id": 11,
       "isRunning": false,
-      "isDone": true
+      "isDone": false
+    },
+    {
+      "title": "Zadania task-react-components",
+      "time": 3598,
+      "id": 12,
+      "isRunning": false,
+      "index": 4
+    },
+    {
+      "title": "Zadanie js-testing",
+      "time": 2186,
+      "id": 13,
+      "isRunning": false,
+      "index": 3,
+      "isDone": true,
+      "isRemoved": true
     }
   ]
 }
