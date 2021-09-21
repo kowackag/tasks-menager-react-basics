@@ -10,7 +10,7 @@ class TasksManager extends React.Component {
     
     render() {
         return (
-            <>
+            <div class ="container">
                 <h1>TasksManager</h1>
                 <section onSubmit = {this.addTaskToDB}>
                 <form>
@@ -19,15 +19,16 @@ class TasksManager extends React.Component {
                     <input type ="submit"/>
                 </form>
                 </section>
-                <section>
-                    <h3>Zaplanowane zadania:</h3>
-                    <ul>{this.renderTaskList()}</ul>
+                <section class="plan">
+                    <h2 class="plan__title">Zaplanowane zadania:</h2>
+                    <ul class="plan__list list">{this.renderTaskList()}</ul>
                 </section>
-                <section>
-                    <h3>Zadania ukończone:</h3>
-                    <ul>{this.renderDoneTaskList()}</ul>
+                <section class="done">
+                    <h2 class="done__title">Zadania ukończone:</h2>
+                    <ul class="done__list list">{this.renderDoneTaskList()}</ul>
                 </section>
-            </>
+            </div>
+        
         )
     }
 
@@ -36,14 +37,13 @@ class TasksManager extends React.Component {
             const {title, time, id, isRemoved, isDone, isRunning} = item;
             if(!isRemoved && !isDone) {
                 return (
-                    <li data-id={id}> 
+                    <li class="list__item" data-id={id}> 
                         <header>
-                            <h2>{title}</h2>
+                            <h3>{title}</h3>
                             <p> {this.displayTime(time)}</p>
                         </header>
                         <footer>
-                            {!isRunning ? <button className ="btn" onClick ={this.runTask}>start</button> : 
-                            <button className ="btn" onClick ={this.stopTask}>stop</button>}
+                            <button className ="btn" onClick = {!isRunning ? this.runTask : this.stopTask }>{isRunning ? "stop" : "start"}</button>
                             <button className ="btn" onClick ={this.finishTask}>Zakończone</button>
                             <button className ="btn" onClick ={this.deleteTask}>Usuń</button>
                         </footer>
@@ -60,7 +60,7 @@ class TasksManager extends React.Component {
                 return (
                     <li data-id={id}> 
                         <header>
-                            <h2>{title}</h2>
+                            <h3>{title}</h3>
                             <p> {this.displayTime(time)}</p>
                         </header>
                         <footer>
@@ -87,9 +87,9 @@ class TasksManager extends React.Component {
             // isDone: false,
             // isRemoved: false
         }
-        if (title.value.length>3 && time.value >0 ) {
-            tasksDB.addData(task)
-            tasksDB.loadData()
+        if (title.value.length> 3 && time.value >0 ) {
+            tasksDB.addDataAPI(task)
+            tasksDB.loadDataAPI()
                 .then(this.loadTasks())
                 .catch(err=>console.log(err))
         } else (alert('Treść zadania nie może mieć mniej niż 3 znaki a czas nie moze byc mniejszy od 0'))
@@ -97,7 +97,7 @@ class TasksManager extends React.Component {
 
     loadTasks() {
         this.setState({tasks:[]})
-        tasksDB.loadData()
+        tasksDB.loadDataAPI()
             .then(resp => { return resp.map(item => this.setState({tasks: [...this.state.tasks, item]}))})
     }
 
@@ -108,7 +108,7 @@ class TasksManager extends React.Component {
     deleteTask = e => {
         e.preventDefault;
         const idTask = e.target.parentElement.parentElement.dataset.id;
-        tasksDB.loadData()
+        tasksDB.loadDataAPI()
             .then(res=> res.filter(item => item.id == idTask))
             .then((item) => { 
                 if (item[0].isDone) {
@@ -121,7 +121,7 @@ class TasksManager extends React.Component {
     finishTask = e => {
         e.preventDefault;
         const idTask = e.target.parentElement.parentElement.dataset.id;
-        tasksDB.loadData()
+        tasksDB.loadDataAPI()
             .then(res=> res.filter(item => item.id == idTask))
             .then((item) => {
                 if (item[0].isRunning) {alert("Zatrzymaj realizację zadania zanim je zakończysz")
@@ -133,14 +133,14 @@ class TasksManager extends React.Component {
     restoreTask = e => {
         e.preventDefault;
         const idTask = e.target.parentElement.parentElement.dataset.id;
-        tasksDB.loadData()
+        tasksDB.loadDataAPI()
             .then(()=> this.updateTask(idTask, "isDone", false))
     }
 
     runTask = e => {
         e.preventDefault;
         const idTask = e.target.parentElement.parentElement.dataset.id;
-        tasksDB.loadData()
+        tasksDB.loadDataAPI()
             .then(()=> this.updateTask(idTask, "isRunning", true))
             .then(()=>this.runTimer(idTask))
     }
@@ -148,13 +148,14 @@ class TasksManager extends React.Component {
     stopTask = e => {
         e.preventDefault;
         const idTask = e.target.parentElement.parentElement.dataset.id;
-        tasksDB.loadData()
+
+        tasksDB.loadDataAPI()
             .then(res=> res.filter(item => item.id == idTask))
             .then(()=> this.updateTask(idTask, "isRunning", false))
     }
 
     runTimer (id) {
-        tasksDB.loadData()
+        tasksDB.loadDataAPI()
         .then(res=> res.filter(item => item.id == id))
         // .then(item => { 
         //     let time = Number(item[0]["time"]);
@@ -179,11 +180,11 @@ class TasksManager extends React.Component {
     // -----------------------------------------------------
 
     updateTask(id, prop, val) {
-        tasksDB.loadData()
+        tasksDB.loadDataAPI()
         .then(res=> res.filter(item => item.id == id))
         .then(item => {{
             item[0][prop] = val;
-            tasksDB.updateData(id, item[0]);
+            tasksDB.updateDataAPI(id, item[0]);
         }})
         .catch(err=>console.log(err))
         .finally(()=>this.loadTasks())

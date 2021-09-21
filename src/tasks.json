@@ -2,7 +2,7 @@
   "tasks": [
     {
       "title": "Zakupy1",
-      "time": 90,
+      "time": 0,
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
@@ -13,15 +13,15 @@
       "time": 90,
       "isRunning": false,
       "isDone": true,
-      "isRemoved": false,
+      "isRemoved": true,
       "id": 2
     },
     {
       "title": "Zakupy3",
       "time": 90,
       "isRunning": false,
-      "isDone": false,
-      "isRemoved": false,
+      "isDone": true,
+      "isRemoved": true,
       "id": 3
     },
     {
@@ -47,9 +47,10 @@
     },
     {
       "title": "Zadanie 7",
-      "time": 33,
+      "time": 6,
       "id": 7,
-      "isRunning": true
+      "isRunning": false,
+      "isDone": false
     },
     {
       "title": "Zadanie 8",
@@ -62,7 +63,7 @@
       "title": "Zadanie 9",
       "time": 0,
       "id": 9,
-      "isRunning": true,
+      "isRunning": false,
       "isDone": false
     },
     {

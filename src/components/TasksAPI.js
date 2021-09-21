@@ -1,13 +1,13 @@
 class TasksAPI {
     constructor() {
-        this.url = 'http://localhost:3005/tasks';
+        this.url = 'http://localhost:3000/tasks';
     }
 
-    loadData() {
+    loadDataAPI() {
         return this._fetch()
     }
 
-    addData(data) {
+    addDataAPI(data) {
         const options = {
             method: 'POST',
             body: JSON.stringify(data),
@@ -18,7 +18,7 @@ class TasksAPI {
         return this._fetch(options)
     }
 
-    updateData(id, data) {
+    updateDataAPI(id, data) {
         const options = {
             method: 'PUT',
             body: JSON.stringify(data),

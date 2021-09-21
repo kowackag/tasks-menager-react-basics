@@ -1,9 +1,22 @@
 body {
-    background-color: #dcdcdc;
+    background-color: #F3F4ED;
     font-family: 'Arial Narrow', Arial, sans-serif, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 90%;
+    margin:auto;
 }
 
 .btn {
     font-family: 'Arial Narrow', Arial, sans-serif, sans-serif;
     text-transform: uppercase;
+    margin: 3%;
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
