@@ -15,7 +15,7 @@ class TasksManager extends React.Component {
                 <section className ="section-form"onSubmit={this.addTaskToDB}>
                     <form className ="form">
                         <input className="form__task" name ="title" onChange={this.changeInput} />
-                        <input className="form__time" name="time" type="number" onChange={this.changeInput}></input>
+                        {/* <input className="form__time" name="time" type="number" onChange={this.changeInput}></input> */}
                         <input className="submit btn" type="submit" />
                     </form>
                 </section>
@@ -80,19 +80,19 @@ class TasksManager extends React.Component {
     addTaskToDB = e => {
         e.preventDefault();
         console.log(e.target)
-        const {title, time } = e.target.elements;
+        const {title} = e.target.elements;
         const task = {
             title: title.value,
-            time: time.value,
-            // isRunning: false, //chyba nie ma sensu dodawac tyh wartości
-            // isDone: false,
-            // isRemoved: false
+            time: 0,
+            isRunning: false,
+            isDone: false,
+            isRemoved: false
         }
-        if (title.value.length > 3 && time.value > 0) {
+        if (title.value.length > 3) {
             tasksDB.addDataAPI(task)
                 .then(() => this.loadTasks())
                 .catch(err => console.log(err))
-        } else (alert('Treść zadania nie może mieć mniej niż 3 znaki a czas nie moze byc mniejszy od 0'))
+        } else (alert('Treść zadania nie może mieć mniej niż 3 znaki'))
     }
 
     loadTasks() {
@@ -101,45 +101,49 @@ class TasksManager extends React.Component {
     }
 
     finishTask = e => {
-        e.preventDefault;
+        e.preventDefault();
         const idTask = e.target.parentElement.parentElement.dataset.id;
-        tasksDB.loadDataAPI()
-            .then(res => res.filter(item => item.id === Number(idTask))) 
-            .then((item) => {
-                if (item[0].isRunning) {
-                    alert("Zatrzymaj realizację zadania zanim je zakończysz")
+        const copyTasks = this.state.tasks.slice();
+        copyTasks.map(item => {
+            if (item.id === Number(idTask)) {
+                if(!item.isRunning) {
+                    item.isDone = true;
+                    tasksDB.updateDataAPI(idTask, item)
+                        .catch(err => console.log(err))
                 } else {
-                    const updatedTask = { ...item[0], isDone: true }
-                    tasksDB.updateDataAPI(idTask, updatedTask)
-                } // ? Nie wiem czy brzydko to nie wygląda :)
-            })
-            .then(() => this.loadTasks())
-            .catch(err => console.log(err))
+                    alert("Zatrzymaj realizację zadania zanim je zakończysz")
+                }
+            }
+         })
+         this.setState({tasks:copyTasks})
     }
 
     deleteTask = e => {
-        e.preventDefault;
+        e.preventDefault();
         const idTask = e.target.parentElement.parentElement.dataset.id;
-        tasksDB.loadDataAPI()
-            .then(res => res.filter(item => item.id === Number(idTask))) 
-            .then((item) => {
-                if (item[0].isDone) {
-                    const updatedTask = { ...item[0], isRemoved: true }
-                    tasksDB.updateDataAPI(idTask, updatedTask)
-                } else { alert("Zadanie musi być zakończone by móc je usunąć") }
-            })
-            .then(() => this.loadTasks())
-            .catch(err => console.log(err))
+        const copyTasks = this.state.tasks.slice();
+        copyTasks.map(item => {
+            if (item.id === Number(idTask)) {
+                if(item.isDone) {
+                    item.isRemoved = true;
+                    tasksDB.updateDataAPI(idTask, item)
+                        .catch(err => console.log(err))
+                } else {
+                    alert("Zatrzymaj realizację zadania zanim je zakończysz")
+                }
+            }
+         })
+         this.setState({tasks:copyTasks})
     }
 
     restoreTask = e => {
-        e.preventDefault;
+        e.preventDefault();
         const idTask = e.target.parentElement.parentElement.dataset.id;
         this.updateTask(idTask, "isDone", false)
     }
 
     runTask = e => {
-        e.preventDefault;
+        e.preventDefault();
         const idTask = e.target.parentElement.parentElement.dataset.id;
         this.updateTask(idTask, "isRunning", true)
         this.runTimer(idTask)
@@ -148,7 +152,7 @@ class TasksManager extends React.Component {
     }
 
     stopTask = e => {
-        e.preventDefault;
+        e.preventDefault();
         const idTask = e.target.parentElement.parentElement.dataset.id;
         const timeEl = e.target.parentElement.parentElement.querySelector('.header__time');
         timeEl.classList.remove('isRunning');
@@ -161,16 +165,15 @@ class TasksManager extends React.Component {
     // -----------------------------------------------------
     
     updateTask(id, prop, val) {
-        tasksDB.loadDataAPI()
-            .then(res => res.filter(item => item.id === Number(id)))
-            .then(item => {
-                {
-                    item[0][prop] = val;
-                    tasksDB.updateDataAPI(id, item[0]);
-                }
-            })
-            .catch(err => console.log(err))
-            .finally(() => this.loadTasks())
+        const copyTasks = this.state.tasks.slice();
+        copyTasks.map(item => {
+            if (item.id === Number(id)) {
+                item[prop] = val;
+                tasksDB.updateDataAPI(id, item)
+                    .catch(err => console.log(err)) 
+            }
+         })
+         this.setState({tasks:copyTasks})
     }
 
     runTimer(id) {
@@ -179,11 +182,8 @@ class TasksManager extends React.Component {
             .then(item => {
                 let time = Number(item[0]["time"]);
                 const ind = setInterval(() => {
+                    time++;
                     this.updateTask(id, "time", time);
-                    time--;
-                    if (time < 0) {
-                        clearInterval(ind)
-                    }
                 }, 1000)
                 this.updateTask(id, "index", ind);
             })

@@ -2,27 +2,29 @@
   "tasks": [
     {
       "title": "Zadanie 1 - JS basis",
-      "time": 1100,
+      "time": 1099,
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
-      "id": 1
+      "id": 1,
+      "index": 2
     },
     {
       "title": "Zadanie tablice",
       "time": 190,
       "isRunning": false,
-      "isDone": true,
+      "isDone": false,
       "isRemoved": false,
       "id": 2
     },
     {
       "title": "Zadanie 3",
-      "time": 90,
+      "time": 84,
       "isRunning": false,
       "isDone": true,
-      "isRemoved": false,
-      "id": 3
+      "isRemoved": true,
+      "id": 3,
+      "index": 2
     },
     {
       "title": "Zadanie react",
@@ -34,31 +36,36 @@
     },
     {
       "title": "Zadanie 9",
-      "time": 120,
+      "time": 117,
       "id": 9,
       "isRunning": false,
-      "isDone": true
+      "isDone": false,
+      "index": 2
     },
     {
       "title": "Zadanie 11",
-      "time": 100,
+      "time": 0,
       "id": 10,
       "isRunning": false,
-      "isDone": false
+      "isDone": true,
+      "index": 5,
+      "isRemoved": true
     },
     {
       "title": "Projekt",
-      "time": 2163,
+      "time": 1761,
       "id": 11,
       "isRunning": false,
-      "isDone": false
+      "isDone": false,
+      "index": 4
     },
     {
       "title": "Zadania task-react-components",
-      "time": 3598,
+      "time": 3193,
       "id": 12,
       "isRunning": false,
-      "index": 4
+      "index": 4,
+      "isDone": false
     },
     {
       "title": "Zadanie js-testing",
@@ -68,6 +75,15 @@
       "index": 3,
       "isDone": true,
       "isRemoved": true
+    },
+    {
+      "title": "Zadanie 45",
+      "time": 40,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 14,
+      "index": 3
     }
   ]
 }
