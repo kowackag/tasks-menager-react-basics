@@ -2,20 +2,20 @@
   "tasks": [
     {
       "title": "Zadanie 1 - JS basis",
-      "time": 1099,
+      "time": 2167,
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
-      "id": 1,
-      "index": 2
+      "id": 1
     },
     {
       "title": "Zadanie tablice",
-      "time": 190,
+      "time": 1169,
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
-      "id": 2
+      "id": 2,
+      "index": 6
     },
     {
       "title": "Zadanie 3",
@@ -36,11 +36,12 @@
     },
     {
       "title": "Zadanie 9",
-      "time": 117,
+      "time": 128,
       "id": 9,
       "isRunning": false,
-      "isDone": false,
-      "index": 2
+      "isDone": true,
+      "index": 2,
+      "isRemoved": true
     },
     {
       "title": "Zadanie 11",
@@ -53,11 +54,11 @@
     },
     {
       "title": "Projekt",
-      "time": 1761,
+      "time": 1789,
       "id": 11,
-      "isRunning": false,
+      "isRunning": true,
       "isDone": false,
-      "index": 4
+      "index": 2
     },
     {
       "title": "Zadania task-react-components",
@@ -65,7 +66,8 @@
       "id": 12,
       "isRunning": false,
       "index": 4,
-      "isDone": false
+      "isDone": true,
+      "isRemoved": true
     },
     {
       "title": "Zadanie js-testing",
@@ -78,12 +80,28 @@
     },
     {
       "title": "Zadanie 45",
-      "time": 40,
+      "time": 46,
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
-      "id": 14,
+      "id": 14
+    },
+    {
+      "title": "Zadanie koncowe react",
+      "time": 15,
+      "isRunning": true,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 15,
       "index": 3
+    },
+    {
+      "title": "Strona WW",
+      "time": 13,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 16
     }
   ]
 }

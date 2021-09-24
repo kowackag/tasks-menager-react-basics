@@ -76,6 +76,10 @@ body {
     font-size: 18px;
 }
 
+.isDone {
+    display: none;
+}
+
 @media(min-width:900px) {
     .form {
         flex-direction: row;

@@ -4,7 +4,7 @@ const tasksDB = new TasksAPI();
 
 class TasksManager extends React.Component {
     state = {
-        time: 0,
+        runningTask:"",
         tasks: [],
     }
 
@@ -15,7 +15,6 @@ class TasksManager extends React.Component {
                 <section className ="section-form"onSubmit={this.addTaskToDB}>
                     <form className ="form">
                         <input className="form__task" name ="title" onChange={this.changeInput} />
-                        {/* <input className="form__time" name="time" type="number" onChange={this.changeInput}></input> */}
                         <input className="submit btn" type="submit" />
                     </form>
                 </section>
@@ -28,49 +27,60 @@ class TasksManager extends React.Component {
                     <ul className="done__list list">{this.renderDoneTaskList()}</ul>
                 </section>
             </div>
-
         )
     }
 
     renderTaskList() {
         return (this.state.tasks.map(item => {
-            const { title, time, id, isRemoved, isDone, isRunning } = item;
+            const {isRemoved, isDone} = item;
             if (!isRemoved && !isDone) {
                 return (
-                    <li className="list__item" data-id={id}>
-                        <header className="header">
-                            <h3 className="header__title">{title}</h3>
-                            <p className="header__time"> {this.displayTime(time)}</p>
-                        </header>
-                        <footer className ="footer">
-                            <button className="btn" onClick={!isRunning ? this.runTask : this.stopTask}>{isRunning ? "stop" : "start"}</button>
-                            <button className="btn" onClick={this.finishTask}>Zakończone</button>
-                            <button className="btn" onClick={this.deleteTask}>Usuń</button>
-                        </footer>
-                    </li>
+                    this.renderListItem(item)
+                )
+            }
+        }))
+    }
+    
+    renderDoneTaskList() {
+        return (this.state.tasks.map(item => {
+            const {isDone, isRemoved } = item;
+            if (isDone && !isRemoved) {
+                return (
+                    this.renderListItem(item)
                 )
             }
         }))
     }
 
-    renderDoneTaskList() {
-        return (this.state.tasks.map(item => {
-            const { title, time, id, isDone, isRemoved } = item;
-            if (isDone && !isRemoved) {
-                return (
-                    <li className="list__item" data-id={id}>
-                        <header className="header">
-                            <h3 className="header__title">{title}</h3>
-                            <p className="header__time"> {this.displayTime(time)}</p>
-                        </header>
-                        <footer className ="footer">
-                            <button className="btn" onClick={this.restoreTask}>Przywróć</button>
-                            <button className="btn" onClick={this.deleteTask}>Usuń</button>
-                        </footer>
-                    </li>
-                )
-            }
-        }))
+    renderListItem(item) {
+        // nie wiem czy był sens rozdzielac na renderHeader i renderFooter??
+        return(
+            <li className="list__item"> 
+                {this.renderHeader(item)} 
+                {this.renderFooter(item)}
+            </li>
+        )
+    }
+    
+    renderHeader(item) {
+        const {title, time, isRunning } = item;
+        return(
+            <header className="header">
+                <h3 className="header__title">{title}</h3>
+                <p className={"header__time " + (isRunning ? "isRunning" : "")}> {this.displayTime(time)}</p>
+            </header> 
+        )
+    }
+
+    renderFooter(item) {
+        const {isRunning, isDone } = item;
+        return(
+            <footer className ="footer">
+                <button className={"btn " + (isDone ? "isDone" : "") } onClick={()=> !isRunning ? this.runTask(item) : this.stopTask(item)}>{isRunning ? "stop" : "start"}</button>
+                <button className="btn" onClick={() => !isDone ? this.finishTask(item): this.restoreTask(item)}>{isDone ? "przywróć" : "zakończ"}</button>
+                <button className="btn" onClick={() => this.deleteTask(item)}>Usuń</button>
+            </footer>
+        )
     }
 
     componentDidMount() {
@@ -79,7 +89,6 @@ class TasksManager extends React.Component {
 
     addTaskToDB = e => {
         e.preventDefault();
-        console.log(e.target)
         const {title} = e.target.elements;
         const task = {
             title: title.value,
@@ -100,15 +109,13 @@ class TasksManager extends React.Component {
             .then(resp => this.setState({ tasks: resp }))
     }
 
-    finishTask = e => {
-        e.preventDefault();
-        const idTask = e.target.parentElement.parentElement.dataset.id;
+    finishTask = task => {
         const copyTasks = this.state.tasks.slice();
         copyTasks.map(item => {
-            if (item.id === Number(idTask)) {
+            if (item.id === Number(task.id)) {
                 if(!item.isRunning) {
                     item.isDone = true;
-                    tasksDB.updateDataAPI(idTask, item)
+                    tasksDB.updateDataAPI(task.id, item)
                         .catch(err => console.log(err))
                 } else {
                     alert("Zatrzymaj realizację zadania zanim je zakończysz")
@@ -118,48 +125,46 @@ class TasksManager extends React.Component {
          this.setState({tasks:copyTasks})
     }
 
-    deleteTask = e => {
-        e.preventDefault();
-        const idTask = e.target.parentElement.parentElement.dataset.id;
+    deleteTask = task => {
         const copyTasks = this.state.tasks.slice();
         copyTasks.map(item => {
-            if (item.id === Number(idTask)) {
+            if (item.id === Number(task.id)) {
                 if(item.isDone) {
                     item.isRemoved = true;
-                    tasksDB.updateDataAPI(idTask, item)
+                    tasksDB.updateDataAPI(task.id, item)
                         .catch(err => console.log(err))
                 } else {
-                    alert("Zatrzymaj realizację zadania zanim je zakończysz")
+                    alert("Zadanie musi byc zakońćzone zanim je usuniesz")
                 }
             }
          })
          this.setState({tasks:copyTasks})
     }
 
-    restoreTask = e => {
-        e.preventDefault();
-        const idTask = e.target.parentElement.parentElement.dataset.id;
-        this.updateTask(idTask, "isDone", false)
+    restoreTask = task => {
+       this.updateTask(task.id, "isDone", false)
     }
 
-    runTask = e => {
-        e.preventDefault();
-        const idTask = e.target.parentElement.parentElement.dataset.id;
-        this.updateTask(idTask, "isRunning", true)
-        this.runTimer(idTask)
-        const timeEl = e.target.parentElement.parentElement.querySelector('.header__time');
-        timeEl.classList.add('isRunning');
+    runTask = task => {
+        console.log(this.state.runningTask)
+        if(!this.state.runningTask) {
+            this.updateTask(task.id, "isRunning", true)
+            this.runTimer(task.id)
+            this.setState({runningTask: task})
+        } else {alert(`Aktualnie realizujesz: ${this.state.runningTask.title}. Musisz zatrzymac zadanie zanim rozpoczniesz kolejne!`)}
     }
 
-    stopTask = e => {
-        e.preventDefault();
-        const idTask = e.target.parentElement.parentElement.dataset.id;
-        const timeEl = e.target.parentElement.parentElement.querySelector('.header__time');
-        timeEl.classList.remove('isRunning');
-        this.updateTask(idTask, "isRunning", false);
-        tasksDB.loadDataAPI()
-            .then(res => res.filter(item => item.id == idTask))
-            .then(item => clearInterval(item[0].index))
+    stopTask = task => {
+        this.updateTask(task.id, "isRunning", false);
+        const copyTasks = this.state.tasks.slice();
+        copyTasks.map(item => { 
+            if (item.id === Number(task.id)){
+                clearInterval(item.index)
+                this.updateTask(task.id,"time", item.time);
+                this.updateTask(task.id, "index", item.ind);
+                this.setState({runningTask: ""})
+            }    
+        })
     }
 
     // -----------------------------------------------------
@@ -177,20 +182,24 @@ class TasksManager extends React.Component {
     }
 
     runTimer(id) {
-        tasksDB.loadDataAPI()
-            .then(res => res.filter(item => item.id === Number(id)))
-            .then(item => {
-                let time = Number(item[0]["time"]);
-                const ind = setInterval(() => {
+        const copyTasks = this.state.tasks.slice();
+        copyTasks.map(item => { 
+            if (item.id === Number(id)){
+                const ind = setInterval(()=>{
+                    let time = item.time;
                     time++;
-                    this.updateTask(id, "time", time);
-                }, 1000)
+                    this.updateTask(id,"time", time)
+                },1000)
                 this.updateTask(id, "index", ind);
-            })
+            }
+        })
     }
 
     displayTime(time) {
-        return `${Math.floor(time / 3600) < 10 ? '0' + Math.floor(time / 3600) : Math.floor(time / 3600)}:${Math.floor(time / 60) % 60 < 10 ? '0' + Math.floor(time / 60) % 60 : Math.floor(time / 60) % 60}:${time % 60 < 10 ? '0' + time % 60 : time % 60}`
+        const hour = Math.floor(time / 3600);
+        const min = Math.floor(time / 60) % 60;
+        const sec = time % 60;
+        return `${hour < 10 ? '0' + hour : hour}:${ min < 10 ? '0' + min : min}:${ sec < 10 ? '0' + sec : sec}`
     }
 }
 
