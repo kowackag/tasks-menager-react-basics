@@ -34,7 +34,13 @@ module.exports = {
                     'css-loader', 
                     // odczytaj plik CSS
                 ],
-            }
+            },
+            {
+                test: /\.(woff|woff2)$/,
+                use: {
+                  loader: 'url-loader',
+                },
+              },
         ]
         // obecnie brak dodatkowych ustawień
     },

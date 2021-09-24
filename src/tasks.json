@@ -88,18 +88,17 @@
     },
     {
       "title": "Zadanie koncowe react",
-      "time": 15,
-      "isRunning": true,
-      "isDone": false,
+      "time": 16,
+      "isRunning": false,
+      "isDone": true,
       "isRemoved": false,
-      "id": 15,
-      "index": 3
+      "id": 15
     },
     {
       "title": "Strona WW",
       "time": 13,
       "isRunning": false,
-      "isDone": false,
+      "isDone": true,
       "isRemoved": false,
       "id": 16
     }
