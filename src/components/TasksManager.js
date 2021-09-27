@@ -4,6 +4,7 @@ const tasksDB = new TasksAPI();
 
 class TasksManager extends React.Component {
     state = {
+        task: "",
         runningTask:"",
         tasks: [],
     }
@@ -12,9 +13,9 @@ class TasksManager extends React.Component {
         return (
             <div className="container">
                 <h1 className="section-title">TasksManager</h1>
-                <section className ="section-form"onSubmit={this.addTaskToDB}>
+                <section className ="section-form" onSubmit={this.addTaskToDB}>
                     <form className ="form">
-                        <input className="form__task" name ="title" onChange={this.changeInput} />
+                        <input className="form__task" value={this.state.task} onChange={this.changeInput} name ="task" onChange={this.changeInput} />
                         <input className="submit btn" type="submit" />
                     </form>
                 </section>
@@ -87,17 +88,23 @@ class TasksManager extends React.Component {
         this.loadTasks();
     }
 
+    changeInput = e => {
+        const {name, value} = e.target;
+        this.setState({
+            [name]: value,
+        });
+    }
+
     addTaskToDB = e => {
-        e.preventDefault();
-        const {title} = e.target.elements;
+        e.preventDefault()
         const task = {
-            title: title.value,
+            title: this.state.task,
             time: 0,
             isRunning: false,
             isDone: false,
             isRemoved: false
         }
-        if (title.value.length > 3) {
+        if (task.title.length > 3) {
             tasksDB.addDataAPI(task)
                 .then(() => this.loadTasks())
                 .catch(err => console.log(err))

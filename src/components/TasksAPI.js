@@ -7,7 +7,6 @@ class TasksAPI {
         return this._fetch()
     }
 
-    
     addDataAPI(data) {
         const options = {
             method: 'POST',

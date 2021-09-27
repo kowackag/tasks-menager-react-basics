@@ -56,9 +56,8 @@
       "title": "Projekt",
       "time": 1789,
       "id": 11,
-      "isRunning": true,
-      "isDone": false,
-      "index": 2
+      "isRunning": false,
+      "isDone": false
     },
     {
       "title": "Zadania task-react-components",
@@ -82,7 +81,7 @@
       "title": "Zadanie 45",
       "time": 46,
       "isRunning": false,
-      "isDone": false,
+      "isDone": true,
       "isRemoved": false,
       "id": 14
     },
@@ -101,6 +100,22 @@
       "isDone": true,
       "isRemoved": false,
       "id": 16
+    },
+    {
+      "title": "Zadanie 46",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 17
+    },
+    {
+      "title": "Zadanie 66",
+      "time": 2,
+      "isRunning": false,
+      "isDone": true,
+      "isRemoved": false,
+      "id": 18
     }
   ]
 }
