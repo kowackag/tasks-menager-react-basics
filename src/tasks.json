@@ -2,7 +2,7 @@
   "tasks": [
     {
       "title": "Zadanie 1 - JS basis",
-      "time": 2167,
+      "time": 2258,
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
@@ -10,12 +10,11 @@
     },
     {
       "title": "Zadanie tablice",
-      "time": 1169,
+      "time": 1181,
       "isRunning": false,
-      "isDone": false,
+      "isDone": true,
       "isRemoved": false,
-      "id": 2,
-      "index": 6
+      "id": 2
     },
     {
       "title": "Zadanie 3",
@@ -81,7 +80,7 @@
       "title": "Zadanie 45",
       "time": 46,
       "isRunning": false,
-      "isDone": true,
+      "isDone": false,
       "isRemoved": false,
       "id": 14
     },
@@ -89,15 +88,15 @@
       "title": "Zadanie koncowe react",
       "time": 16,
       "isRunning": false,
-      "isDone": true,
+      "isDone": false,
       "isRemoved": false,
       "id": 15
     },
     {
       "title": "Strona WW",
-      "time": 13,
+      "time": 22,
       "isRunning": false,
-      "isDone": true,
+      "isDone": false,
       "isRemoved": false,
       "id": 16
     },
@@ -105,8 +104,8 @@
       "title": "Zadanie 46",
       "time": 0,
       "isRunning": false,
-      "isDone": false,
-      "isRemoved": false,
+      "isDone": true,
+      "isRemoved": true,
       "id": 17
     },
     {
@@ -114,8 +113,16 @@
       "time": 2,
       "isRunning": false,
       "isDone": true,
-      "isRemoved": false,
+      "isRemoved": true,
       "id": 18
+    },
+    {
+      "title": "Zadanie react-components",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 19
     }
   ]
 }

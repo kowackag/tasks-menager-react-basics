@@ -117,8 +117,7 @@ class TasksManager extends React.Component {
     }
 
     finishTask = task => {
-        const copyTasks = this.state.tasks.slice();
-        copyTasks.map(item => {
+        this.setState(() => this.state.tasks.map(item => {
             if (item.id === Number(task.id)) {
                 if(!item.isRunning) {
                     item.isDone = true;
@@ -128,13 +127,11 @@ class TasksManager extends React.Component {
                     alert("Zatrzymaj realizację zadania zanim je zakończysz")
                 }
             }
-         })
-         this.setState({tasks:copyTasks})
+         }))
     }
 
     deleteTask = task => {
-        const copyTasks = this.state.tasks.slice();
-        copyTasks.map(item => {
+        this.setState(() => this.state.tasks.map(item => {
             if (item.id === Number(task.id)) {
                 if(item.isDone) {
                     item.isRemoved = true;
@@ -144,8 +141,7 @@ class TasksManager extends React.Component {
                     alert("Zadanie musi byc zakońćzone zanim je usuniesz")
                 }
             }
-         })
-         this.setState({tasks:copyTasks})
+         }))
     }
 
     restoreTask = task => {
@@ -163,8 +159,7 @@ class TasksManager extends React.Component {
 
     stopTask = task => {
         this.updateTask(task.id, "isRunning", false);
-        const copyTasks = this.state.tasks.slice();
-        copyTasks.map(item => { 
+        this.state.tasks.map(item => { 
             if (item.id === Number(task.id)){
                 clearInterval(item.index)
                 this.updateTask(task.id,"time", item.time);
@@ -177,20 +172,17 @@ class TasksManager extends React.Component {
     // -----------------------------------------------------
     
     updateTask(id, prop, val) {
-        const copyTasks = this.state.tasks.slice();
-        copyTasks.map(item => {
+        this.setState(()=> this.state.tasks.map(item => {
             if (item.id === Number(id)) {
                 item[prop] = val;
                 tasksDB.updateDataAPI(id, item)
                     .catch(err => console.log(err)) 
             }
-         })
-         this.setState({tasks:copyTasks})
+         }))
     }
 
     runTimer(id) {
-        const copyTasks = this.state.tasks.slice();
-        copyTasks.map(item => { 
+        this.state.tasks.map(item => { 
             if (item.id === Number(id)){
                 const ind = setInterval(()=>{
                     let time = item.time;
