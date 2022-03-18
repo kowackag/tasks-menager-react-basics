@@ -88,7 +88,7 @@
       "title": "Zadanie koncowe react",
       "time": 16,
       "isRunning": false,
-      "isDone": false,
+      "isDone": true,
       "isRemoved": false,
       "id": 15
     },
@@ -96,7 +96,7 @@
       "title": "Strona WW",
       "time": 22,
       "isRunning": false,
-      "isDone": false,
+      "isDone": true,
       "isRemoved": false,
       "id": 16
     },
@@ -123,6 +123,14 @@
       "isDone": false,
       "isRemoved": false,
       "id": 19
+    },
+    {
+      "title": "Zadanie react kanban-board",
+      "time": 0,
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 20
     }
   ]
 }
